@@ -2,11 +2,16 @@
 export default {
   content: [
     "./index.html",
-    "./*.turbo_frame.html",
+    "./public/**/*.html",
     "./src/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        black: '#2e3436',
+        brightGreen: '#8ae234'
+      }
+    },
   },
   plugins: [],
 }
