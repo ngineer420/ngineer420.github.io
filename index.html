@@ -9,14 +9,36 @@
     <script type="module" src="/src/main.ts"></script>
   </head>
   <body>
-    <turbo-frame class="absolute inset-0 overflow-y-auto grid grid-rows-[auto_1fr] p-4 bg-black text-brightGreen"
-                 data-controller="terminal"
-                 id="terminal" 
-                 src="/hello.turbo_frame.html">
-      <div>
-        Command not found
-      </div>
-      <turbo-frame id="cli" src="/cli.turbo_frame.html"></turbo-frame>
-    </turbo-frame>
+    <div id="terminal"
+         class="absolute inset-0 overflow-y-auto grid grid-rows-[auto_1fr] p-4 bg-black text-brightGreen font-mono"
+         data-action="turbo:before-fetch-response->terminal#handle404"
+         data-controller="terminal">
+      <turbo-frame id="output" data-terminal-target="output">
+        <pre class="text-xs text-center">
+                                                       bbbbbbbb           bbbbbbbb                                                  
+                  RRRRRRRRRRRRRRRRR                    b::::::b           b::::::b                      iiii          tttt          
+                  R::::::::::::::::R                   b::::::b           b::::::b                     i::::i      ttt:::t          
+                  R::::::RRRRRR:::::R                  b::::::b           b::::::b                      iiii       t:::::t          
+                  RR:::::R     R:::::R                  b:::::b            b:::::b                                 t:::::t          
+    eeeeeeeeeeee    R::::R     R:::::R  aaaaaaaaaaaaa   b:::::bbbbbbbbb    b:::::bbbbbbbbb            iiiiiiittttttt:::::ttttttt    
+  ee::::::::::::ee  R::::R     R:::::R  a::::::::::::a  b::::::::::::::bb  b::::::::::::::bb          i:::::it:::::::::::::::::t    
+ e::::::eeeee:::::eeR::::RRRRRR:::::R   aaaaaaaaa:::::a b::::::::::::::::b b::::::::::::::::b          i::::it:::::::::::::::::t    
+e::::::e     e:::::eR:::::::::::::RR             a::::a b:::::bbbbb:::::::bb:::::bbbbb:::::::b         i::::itttttt:::::::tttttt    
+e:::::::eeeee::::::eR::::RRRRRR:::::R     aaaaaaa:::::a b:::::b    b::::::bb:::::b    b::::::b         i::::i      t:::::t          
+e:::::::::::::::::e R::::R     R:::::R  aa::::::::::::a b:::::b     b:::::bb:::::b     b:::::b         i::::i      t:::::t          
+e::::::eeeeeeeeeee  R::::R     R:::::R a::::aaaa::::::a b:::::b     b:::::bb:::::b     b:::::b         i::::i      t:::::t          
+e:::::::e           R::::R     R:::::Ra::::a    a:::::a b:::::b     b:::::bb:::::b     b:::::b         i::::i      t:::::t    tttttt
+e::::::::e        RR:::::R     R:::::Ra::::a    a:::::a b:::::bbbbbb::::::bb:::::bbbbbb::::::b        i::::::i     t::::::tttt:::::t
+ e::::::::eeeeeeeeR::::::R     R:::::Ra:::::aaaa::::::a b::::::::::::::::b b::::::::::::::::b  ...... i::::::i     tt::::::::::::::t
+  ee:::::::::::::eR::::::R     R:::::R a::::::::::aa:::ab:::::::::::::::b  b:::::::::::::::b   .::::. i::::::i       tt:::::::::::tt
+    eeeeeeeeeeeeeeRRRRRRRR     RRRRRRR  aaaaaaaaaa  aaaabbbbbbbbbbbbbbbb   bbbbbbbbbbbbbbbb    ...... iiiiiiii         ttttttttttt  
+        </pre>
+        Welcome! Available commands:
+          <strong>cd [DIRECTORY]</strong>,
+          <strong>ls [DIRECTORY]</strong>
+      </turbo-frame>
+
+      <turbo-frame id="input" class="relative" src="/cd/index.turbo_frame.html"></turbo-frame>
+    </div>
   </body>
 </html>
