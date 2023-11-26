@@ -1,33 +1,33 @@
 <turbo-frame id="output">
-  <article>
-    <h1 class="mb-4 font-bold text-2xl">Project: eRabb.it</h1>
+  <article class="prose">
+    <h1>Project: eRabb.it</h1>
 
     A terminal-esque web profile
 
-    <h2 class="my-4 font-bold text-xl">Stack</h2>
+    <h2>Stack</h2>
 
-    <ul class="my-2 pl-2">
+    <ul>
       <li>- CSS: Tailwind</li>
       <li>- DevOps: Vite</li>
       <li>- JS: Turbo + Stimulus</li>
     </ul>
 
-    <h2 class="my-4 font-bold text-xl">Objective</h2>
+    <h2>Objective</h2>
 
     To use Turbo Frames to create a UX that behaved like a terminal with as little custom JS as practical, and with no backend what-so-ever.
 
-    <h2 class="my-4 font-bold text-xl">Benefits</h2>
+    <h2>Benefits</h2>
 
-    <ul class="my-2 pl-2">
+    <ul>
       <li>- Generates static HTML for consistently fast page loads</li>
       <li>- Sends HTML-over-the-wire for fast, dynamic page updates</li>
       <li>- Adds very little custom JS so the application overhead remains low</li>
       <li>- Doesn't utilize a backend server or database so the entire application can be hosted for free on GitHub pages</li>
     </ul>
 
-    <h2 class="my-4 font-bold text-xl">Drawbacks</h2>
+    <h2>Drawbacks</h2>
 
-    <ul class="my-2 pl-2">
+    <ul>
       <li>- With no backend, forces a trade-off between DRY-templating and superfluous requests. Opted for the latter as these typically produce 304s from the browser, and/or are fast and free. These templates can be found in the /public/application directory.</li>
     </ul>
   </article>
