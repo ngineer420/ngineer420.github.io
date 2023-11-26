@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#output {
+	overflow-anchor: none;
+}
+
+#input {
+	overflow-anchor: auto;
+}
