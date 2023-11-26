@@ -13,7 +13,9 @@
          class="absolute inset-0 overflow-y-auto grid grid-rows-[auto_1fr] p-4 bg-black text-brightGreen font-mono"
          data-action="turbo:before-fetch-response->terminal#handle404"
          data-controller="terminal">
-      <turbo-frame id="output" data-terminal-target="output">
+      <turbo-frame id="output" 
+                   data-action="turbo:before-frame-render->terminal#appendOutput"
+                   data-terminal-target="output">
         <pre class="text-xs text-center">
                                                        bbbbbbbb           bbbbbbbb                                                  
                   RRRRRRRRRRRRRRRRR                    b::::::b           b::::::b                      iiii          tttt          
