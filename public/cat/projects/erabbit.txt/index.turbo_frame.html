@@ -28,7 +28,7 @@
     <h2>Drawbacks</h2>
 
     <ul>
-      <li>- With no backend, forces a trade-off between DRY-templating and superfluous requests. Opted for the latter as these typically produce 304s from the browser, and/or are fast and free. These templates can be found in the /public/application directory.</li>
+      <li>- With no backend nor any build tools to generate the HTML itself, the approach forces a trade-off between DRY-templating and superfluous requests. Opted for the latter as these typically produce 304s from the browser, and/or are fast and free. These templates can be found in the /public/application directory. This would not be necessary if using a static site generator, like Jekyll - I may opt into this added complexity should the project grow in scope at a later point.</li>
     </ul>
   </article>
 </turbo-frame>
