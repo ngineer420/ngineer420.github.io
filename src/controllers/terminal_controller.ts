@@ -1,14 +1,14 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller<HTMLElement> {
-  static targets = [ "cli", "dir", "output" ]
+  static targets = [ "cli", "cwd", "output" ]
 
   declare readonly cliTarget: HTMLInputElement
   declare readonly cliTargets: HTMLInputElement[]
-  declare readonly dirTarget: HTMLAnchorElement
-  declare readonly dirTargets: HTMLAnchorElement[]
+  declare readonly cwdTarget: HTMLAnchorElement
+  declare readonly cwdTargets: HTMLAnchorElement[]
   declare readonly hasCliTarget: boolean
-  declare readonly hasDirTarget: boolean
+  declare readonly hasCwdTarget: boolean
   declare readonly hasOutputTarget: boolean
   declare readonly outputTarget: HTMLElement
   declare readonly outputTargets: HTMLElement[]
@@ -40,7 +40,7 @@ export default class extends Controller<HTMLElement> {
   }
 
   private basePath() {
-    return this.dirTarget.dataset?.dir || '/'
+    return this.cwdTarget.dataset?.cwd || '/'
   }
 
   private goTo(val: string) {
@@ -48,10 +48,10 @@ export default class extends Controller<HTMLElement> {
     let cmd = args.shift()
 
     this.cliTarget.value = ""
-    this.dirTarget.href = `${document.baseURI}/${cmd}` 
+    this.cwdTarget.href = `${document.baseURI}/${cmd}` 
                           + this.path(args.join(" "))
-    this.dirTarget.dataset.turboFrame = cmd == 'cd' ? 'input' : 'output'
-    this.dirTarget.click()
+    this.cwdTarget.dataset.turboFrame = cmd == 'cd' ? 'input' : 'output'
+    this.cwdTarget.click()
   }
 
   private path(val: string) {
