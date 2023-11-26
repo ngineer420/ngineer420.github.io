@@ -39,8 +39,12 @@ export default class extends Controller<HTMLElement> {
     this.goTo(ev.target.value)
   }
 
-  private basePath() {
-    return this.cwdTarget.dataset?.cwd || '/'
+  private cmdArgPath(val: string) {
+    let path = this.pathFromCwd(val)
+    
+    path += path.endsWith("/") ? "" : "/"
+
+    return path + "index.turbo_frame.html"
   }
 
   private goTo(val: string) {
@@ -49,20 +53,12 @@ export default class extends Controller<HTMLElement> {
 
     this.cliTarget.value = ""
     this.cwdTarget.href = `${document.baseURI}/${cmd}` 
-                          + this.path(args.join(" "))
+                          + this.cmdArgPath(args.join(" "))
     this.cwdTarget.dataset.turboFrame = cmd == 'cd' ? 'input' : 'output'
     this.cwdTarget.click()
   }
 
-  private path(val: string) {
-    if (!val.startsWith("/")) {
-      val = this.basePath() + val
-    }
-
-    if (!val.endsWith("/")) {
-      val += "/"
-    }
-
-    return val + "index.turbo_frame.html"
+  private pathFromCwd(val: string) {
+    return val.startsWith("/") ? val : this.cwdTarget.dataset.cwd + val
   }
 }
