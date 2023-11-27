@@ -1,13 +1,10 @@
-import { Controller } from "@hotwired/stimulus"
+ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller<HTMLElement> {
-  static targets = [ "cli", "cwd", "output" ]
+  static targets = [ "cwd", "output" ]
 
-  declare readonly cliTarget: HTMLInputElement
-  declare readonly cliTargets: HTMLInputElement[]
   declare readonly cwdTarget: HTMLAnchorElement
   declare readonly cwdTargets: HTMLAnchorElement[]
-  declare readonly hasCliTarget: boolean
   declare readonly hasCwdTarget: boolean
   declare readonly hasOutputTarget: boolean
   declare readonly outputTarget: HTMLElement
@@ -33,28 +30,29 @@ export default class extends Controller<HTMLElement> {
   submit(ev: any) {
     ev.preventDefault()
 
-    this.outputTarget.innerHTML += 
-      `<div>${this.cwdTarget.text} ${ev.target.value}</div>`
+    let cmd = ev.target.value
+
+    this.outputTarget.innerHTML += `<div>${this.cwdTarget.text} ${cmd}</div>`
+    ev.target.value = ""
       
-    this.goTo(ev.target.value)
-  }
-
-  private cmdArgPath(val: string) {
-    let path = this.pathFromCwd(val)
-    
-    path += path.endsWith("/") ? "" : "/"
-
-    return path + "index.turbo_frame.html"
+    this.goTo(cmd)
   }
 
   private goTo(val: string) {
     let args = val.split(" ")
-    let cmd = args.shift()
+    let cmdPath = this.pathFromCwd(args.pop() || "")
 
-    this.cliTarget.value = ""
-    this.cwdTarget.href = `${document.baseURI}/${cmd}` 
-                          + this.cmdArgPath(args.join(" "))
-    this.cwdTarget.dataset.turboFrame = cmd == 'cd' ? 'input' : 'output'
+    this.cwdTarget.href = `${document.baseURI}${cmdPath}`
+    this.cwdTarget.href += this.cwdTarget.href.endsWith("/") ? "" : "/"
+
+    if (args.length > 0) {
+      this.cwdTarget.href += `${args.join("/")}/`
+    }
+
+    this.cwdTarget.href += "index.turbo_frame.html"
+
+    this.cwdTarget.dataset.turboFrame = args[0] == 'cd' ? 'input' : 'output'
+
     this.cwdTarget.click()
   }
 
