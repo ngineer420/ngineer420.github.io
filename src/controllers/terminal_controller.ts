@@ -56,7 +56,9 @@ export default class extends Controller<HTMLElement> {
 
     this.cwdTarget.href += "index.turbo_frame.html"
 
-    this.cwdTarget.dataset.turboFrame = args[0] == 'cd' ? 'input' : 'output'
+    this.cwdTarget.dataset.turboFrame = args.slice(-1)[0] == 'cd' || cmdPath.endsWith("/cd")
+                                        ? 'input' 
+                                        : 'output'
 
     this.cwdTarget.click()
   }
