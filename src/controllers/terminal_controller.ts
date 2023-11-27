@@ -31,11 +31,16 @@ export default class extends Controller<HTMLElement> {
     ev.preventDefault()
 
     let cmd = ev.target.value
-
-    this.outputTarget.innerHTML += `<div>${this.cwdTarget.text} ${cmd}</div>`
     ev.target.value = ""
+
+    if (cmd == "clear") {
+      this.outputTarget.innerHTML = ""
+    }
+    else {
+      this.outputTarget.innerHTML += `<div>${this.cwdTarget.text} ${cmd}</div>`
       
-    this.goTo(cmd)
+      this.goTo(cmd)
+    }
   }
 
   private goTo(val: string) {
