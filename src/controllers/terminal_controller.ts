@@ -23,8 +23,7 @@ export default class TerminalController extends Controller<HTMLElement> {
     if (ev.detail.fetchResponse.response.status == 404) {
       ev.preventDefault()
 
-      this.outputTarget.innerHTML += 
-        "<div><strong>Command/path not found</strong></div>"
+      this.stdOut("<strong>Command/path not found</strong>")
     }
   }
 
@@ -38,7 +37,7 @@ export default class TerminalController extends Controller<HTMLElement> {
       this.outputTarget.innerHTML = ""
     }
     else {
-      this.outputTarget.innerHTML += `<div>${this.cwdTarget.text} ${cmd}</div>`
+      this.stdOut(`${this.cwdTarget.text} ${cmd}`)
       
       this.goTo(cmd)
     }
@@ -86,5 +85,12 @@ export default class TerminalController extends Controller<HTMLElement> {
 
   private pathFromCwd(val: string) {
     return val.startsWith("/") ? val : this.cwdTarget.dataset.cwd + val
+  }
+
+  private stdOut(val: string) {
+    let output = document.createElement("div")
+    output.innerHTML = val
+
+    this.outputTarget.appendChild(output)
   }
 }

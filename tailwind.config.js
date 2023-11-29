@@ -7,6 +7,14 @@ export default {
   ],
   theme: {
     extend: {
+      keyframes: theme => ({
+        blockHide: {
+          '0%': { display: 'none' },
+          '99%': { display: 'none' },
+          '100%': { display: 'block' }
+        },
+      }),
+
       colors: {
         black: '#2e3436',
         brightGreen: '#8ae234'
