@@ -1,6 +1,7 @@
  import { Controller } from "@hotwired/stimulus"
 
-export default class extends Controller<HTMLElement> {
+export default class TerminalController extends Controller<HTMLElement> {
+  static inferredPathCmds = [ "ls", "pwd" ]
   static targets = [ "cwd", "output" ]
 
   declare readonly cwdTarget: HTMLAnchorElement
@@ -43,20 +44,40 @@ export default class extends Controller<HTMLElement> {
     }
   }
 
-  private goTo(val: string) {
+  private cmdPath(val: string) {
     let args = val.split(" ")
-    let cmdPath = this.pathFromCwd(args.pop() || "")
+    let cmdArgs = []
 
-    this.cwdTarget.href = `${document.baseURI}${cmdPath}`
-    this.cwdTarget.href += this.cwdTarget.href.endsWith("/") ? "" : "/"
-
-    if (args.length > 0) {
-      this.cwdTarget.href += `${args.join("/")}/`
+    if (args[0] == "sudo") {
+      cmdArgs.push(args.shift())
     }
 
-    this.cwdTarget.href += "index.turbo_frame.html"
+    cmdArgs = [...[args.shift()], ...cmdArgs]
 
-    this.cwdTarget.dataset.turboFrame = args.slice(-1)[0] == 'cd' || cmdPath.endsWith("/cd")
+    if (!cmdArgs[0]?.startsWith("/")) {
+      cmdArgs[0] = cmdArgs[0]?.includes("/") 
+                ? this.pathFromCwd(cmdArgs[0]) 
+                : `/bin/${cmdArgs[0]}`
+    }
+
+    let cmd = (cmdArgs[0] || "").split("/").splice(-1)[0]
+    let inferPath = TerminalController.inferredPathCmds.includes(cmd)
+    
+    let dirPath = args.length > 0 || inferPath
+                  ? this.pathFromCwd(args.join("/"))
+                  : "/"
+    
+    dirPath += dirPath.endsWith("/") ? "" : "/"
+
+    return `${cmdArgs.join("/")}${dirPath}`
+  }
+
+  private goTo(val: string) {
+    let path = this.cmdPath(val).substring(1)
+
+    this.cwdTarget.href = `${document.baseURI}${path}index.turbo_frame.html`
+
+    this.cwdTarget.dataset.turboFrame = path.startsWith("bin/cd/")
                                         ? 'input' 
                                         : 'output'
 
