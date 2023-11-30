@@ -1,4 +1,4 @@
- import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus"
 
 export default class TerminalController extends Controller<HTMLElement> {
   static inferredPathCmds = [ "ls", "pwd" ]
@@ -30,17 +30,21 @@ export default class TerminalController extends Controller<HTMLElement> {
   submit(ev: any) {
     ev.preventDefault()
 
-    let cmd = ev.target.value
-    ev.target.value = ""
-
-    if (cmd == "clear") {
-      this.outputTarget.innerHTML = ""
+    if (ev.target.value == "clear") {
+      this.submitClear(ev)
     }
     else {
-      this.stdOut(`${this.cwdTarget.text} ${cmd}`)
-      
-      this.goTo(cmd)
+      this.stdOut(`${this.cwdTarget.text} ${ev.target.value}`)
+      this.goTo(ev.target.value)
     }
+
+    ev.target.value = ""
+  }
+
+  submitClear(ev: any) {
+    ev.preventDefault()
+
+    this.outputTarget.innerHTML = ""
   }
 
   private cmdPath(val: string) {
@@ -77,8 +81,8 @@ export default class TerminalController extends Controller<HTMLElement> {
     this.cwdTarget.href = `${document.baseURI}${path}index.turbo_frame.html`
 
     this.cwdTarget.dataset.turboFrame = path.startsWith("bin/cd/")
-                                        ? 'input' 
-                                        : 'output'
+                                        ? "input" 
+                                        : "output"
 
     this.cwdTarget.click()
   }

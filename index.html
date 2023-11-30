@@ -11,7 +11,7 @@
   <body>
     <div id="terminal"
          class="absolute inset-0 overflow-y-auto grid grid-rows-[auto_1fr] p-4 bg-black text-bright-green font-mono"
-         data-action="turbo:before-fetch-response->terminal#handle404"
+         data-action="turbo:before-fetch-response->terminal#handle404 keydown.meta+k->terminal#submitClear"
          data-controller="terminal">
       <turbo-frame id="output" 
                    data-action="turbo:before-frame-render->terminal#appendOutput"
