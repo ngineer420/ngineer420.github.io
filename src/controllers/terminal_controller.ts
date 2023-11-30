@@ -11,7 +11,7 @@ export default class TerminalController extends Controller<HTMLElement> {
   declare readonly outputTarget: HTMLElement
   declare readonly outputTargets: HTMLElement[]
 
-  appendOutput(ev: any) {
+  appendOutput(ev: CustomEvent) {
     ev.detail.render = (currentElement: HTMLElement, newElement: HTMLElement) => {
       while (newElement.children.length > 0) {
         currentElement.appendChild(newElement.children[0])
@@ -19,7 +19,7 @@ export default class TerminalController extends Controller<HTMLElement> {
     }
   }
 
-  handle404(ev: any) {
+  handle404(ev: CustomEvent) {
     if (ev.detail.fetchResponse.response.status == 404) {
       ev.preventDefault()
 
@@ -27,7 +27,7 @@ export default class TerminalController extends Controller<HTMLElement> {
     }
   }
 
-  submit(ev: any) {
+  submit(ev: Event & { target: HTMLTextAreaElement }) {
     ev.preventDefault()
 
     if (ev.target.value == "clear") {
@@ -41,7 +41,7 @@ export default class TerminalController extends Controller<HTMLElement> {
     ev.target.value = ""
   }
 
-  submitClear(ev: any) {
+  submitClear(ev: Event) {
     ev.preventDefault()
 
     this.outputTarget.innerHTML = ""
