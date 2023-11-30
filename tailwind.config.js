@@ -16,8 +16,8 @@ export default {
       }),
 
       colors: {
-        black: '#2e3436',
-        brightGreen: '#8ae234'
+        'black': '#2e3436',
+        'bright-green': '#8ae234'
       }
     },
   },
