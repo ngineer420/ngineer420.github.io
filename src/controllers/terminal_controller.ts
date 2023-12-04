@@ -13,9 +13,7 @@ export default class TerminalController extends Controller<HTMLElement> {
 
   appendOutput(ev: CustomEvent) {
     ev.detail.render = (currentElement: HTMLElement, newElement: HTMLElement) => {
-      while (newElement.children.length > 0) {
-        currentElement.appendChild(newElement.children[0])
-      }
+      currentElement.append(...newElement.children)
     }
   }
 
@@ -27,18 +25,20 @@ export default class TerminalController extends Controller<HTMLElement> {
     }
   }
 
-  submit(ev: Event & { target: HTMLTextAreaElement }) {
+  submit(ev: Event & { target: HTMLElement }) {
     ev.preventDefault()
 
-    if (ev.target.value == "clear") {
+    let cmdVal = ev.target.innerText.trimRight()
+
+    if (cmdVal == "clear") {
       this.submitClear(ev)
     }
     else {
-      this.stdOut(`${this.cwdTarget.text} ${ev.target.value}`)
-      this.goTo(ev.target.value)
+      this.stdOut(`${this.cwdTarget.text} ${cmdVal}`)
+      this.goTo(cmdVal)
     }
 
-    ev.target.value = ""
+    ev.target.innerHTML = ""
   }
 
   submitClear(ev: Event) {
