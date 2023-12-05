@@ -9,13 +9,15 @@
     <script type="module" src="/src/main.ts"></script>
   </head>
   <body>
-    <div id="terminal"
-         class="absolute inset-0 overflow-y-auto grid grid-rows-[auto_1fr] p-4 bg-black text-bright-green font-mono"
-         data-action="turbo:before-fetch-response->terminal#handle404 keydown.meta+k->terminal#submitClear"
-         data-controller="terminal">
+    <div class="absolute inset-0 overflow-y-auto grid grid-rows-[auto_1fr] p-4 
+                bg-black text-bright-green font-mono">
       <turbo-frame id="output" 
-                   data-action="turbo:before-frame-render->terminal#appendOutput"
-                   data-terminal-target="output">
+                   data-action="turbo:before-fetch-response->output#handle404
+                                turbo:before-frame-render->output#setRenderToAppend
+                                keydown.meta+k@document->output#clear
+                                input:clearOut@document->output#clear 
+                                input:stdOut@document->output#stdOut"
+                   data-controller="output">
         <pre class="text-xs text-center">
                                                        bbbbbbbb           bbbbbbbb                                                  
                   RRRRRRRRRRRRRRRRR                    b::::::b           b::::::b                      iiii          tttt          
@@ -44,7 +46,11 @@ e::::::::e        RR:::::R     R:::::Ra::::a    a:::::a b:::::bbbbbb::::::bb::::
           <strong>source-control</strong>
       </turbo-frame>
 
-      <turbo-frame id="input" class="relative" src="/bin/cd/index.turbo_frame.html"></turbo-frame>
+      <turbo-frame id="input" 
+                   class="relative" 
+                   data-controller="input"
+                   src="/bin/cd/index.turbo_frame.html">
+      </turbo-frame>
     </div>
   </body>
 </html>
