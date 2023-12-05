@@ -8,6 +8,12 @@ export default class InputController extends Controller<HTMLElement> {
   declare readonly cwdTargets: HTMLAnchorElement[]
   declare readonly hasCwdTarget: boolean
 
+  clear(ev: Event & { target: HTMLElement }) {
+    ev.preventDefault()
+
+    ev.target.innerHTML = ""
+  }
+
   enterCmd(ev: Event & { target: HTMLElement }) {
     ev.preventDefault()
 
