@@ -1,0 +1,39 @@
+<turbo-frame id="output">
+  <article class="prose">
+    <h1>Project: fontloom.com</h1>
+
+    A free fancy text generator: type plain text, get 29 stylized Unicode versions of it
+
+    <h2>Stack</h2>
+
+    <ul>
+      <li>- HTML/CSS/JS: Vanilla, no framework or build step</li>
+      <li>- DevOps: Static files on GitHub Pages, custom domain (fontloom.com)</li>
+    </ul>
+
+    <h2>Objective</h2>
+
+    To turn plain typed text into bold, italic, script, gothic/fraktur, double-struck, bubble/circled, squared, small caps, superscript/subscript, strikethrough, upside-down, mirrored, and zalgo/glitch versions instantly, each with a one-click Copy button — using nothing but Unicode code points, no font files required.
+
+    <h2>Benefits</h2>
+
+    <ul>
+      <li>- Runs entirely client-side; nothing typed is ever sent to a server</li>
+      <li>- No font files bundled — every style is a lookup table into existing Unicode blocks</li>
+      <li>- Missing glyphs (e.g. subscript/superscript gaps, small caps q/x) fall back to the plain character instead of breaking</li>
+      <li>- No backend or database, so the whole site is free to host</li>
+    </ul>
+
+    <h2>Drawbacks</h2>
+
+    <ul>
+      <li>- Styled Unicode isn't real bold/italic — some fonts or platforms render certain code points inconsistently or not at all</li>
+    </ul>
+
+    <h2>Easter Eggs</h2>
+
+    <ul>
+      <li>- eRabb.it, tucked into the very bottom-right corner of the page</li>
+    </ul>
+  </article>
+</turbo-frame>
