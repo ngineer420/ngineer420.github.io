@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐇</text></svg>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects — eRabb.it</title>
+    <meta name="description" content="Projects built under the eRabb.it banner — a family of free, fast, browser-based tools: image tools, color tools, QR codes, timers, calculators, a notepad, a tuner, and more." />
+    <link rel="canonical" href="https://erabb.it/projects" />
+    <link rel="stylesheet" type="text/css" href="/src/index.css">
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body>
+    <div class="absolute inset-0 bg-black text-bright-green font-mono grid grid-rows-[1fr] md:grid-rows-[1fr_45vh]">
+
+      <!-- TOP: crawlable projects index (real content + real backlinks) -->
+      <main class="overflow-y-auto p-4 sm:p-6">
+        <h1 class="font-bold text-2xl mb-2">Projects</h1>
+        <p class="mb-6 max-w-2xl opacity-80">
+          A family of free, fast, browser-based tools — every one runs entirely
+          client-side with no sign-up. Built and maintained under the eRabb.it banner.
+        </p>
+        <ul class="space-y-3 max-w-2xl">
+          <li><a href="https://calculatoreuphoria.com" target="_blank" rel="noopener" class="underline font-bold">Calculator Euphoria</a> <span class="opacity-70">— free online calculators for math, finance, health &amp; everyday life (calculatoreuphoria.com)</span></li>
+          <li><a href="https://clocklab.net" target="_blank" rel="noopener" class="underline font-bold">Clock Lab</a> <span class="opacity-70">— countdown, stopwatch, pomodoro, alarms &amp; world clock (clocklab.net)</span></li>
+          <li><a href="https://cpsboost.com" target="_blank" rel="noopener" class="underline font-bold">CPS Boost</a> <span class="opacity-70">— click speed test: measure your clicks per second (cpsboost.com)</span></li>
+          <li><a href="https://drawlots.net" target="_blank" rel="noopener" class="underline font-bold">Draw Lots</a> <span class="opacity-70">— spinner wheel, name picker, dice, coin flip &amp; more (drawlots.net)</span></li>
+          <li><a href="https://erabb.it" class="underline font-bold">eRabb.it</a> <span class="opacity-70">— the terminal you're poking around in right now (erabb.it)</span></li>
+          <li><a href="https://fontloom.com" target="_blank" rel="noopener" class="underline font-bold">Fontloom</a> <span class="opacity-70">— fancy text generator: stylish Unicode from plain text (fontloom.com)</span></li>
+          <li><a href="https://generateascii.com" target="_blank" rel="noopener" class="underline font-bold">Generate ASCII</a> <span class="opacity-70">— turn text and images into ASCII art (generateascii.com)</span></li>
+          <li><a href="https://hueshift.net" target="_blank" rel="noopener" class="underline font-bold">Hue Shift</a> <span class="opacity-70">— color picker, converters, gradients &amp; contrast checks (hueshift.net)</span></li>
+          <li><a href="https://notepadly.app" target="_blank" rel="noopener" class="underline font-bold">Notepadly</a> <span class="opacity-70">— a distraction-free notepad that autosaves in your browser (notepadly.app)</span></li>
+          <li><a href="https://perfecttune.net" target="_blank" rel="noopener" class="underline font-bold">Perfect Tune</a> <span class="opacity-70">— guitar tuner, metronome &amp; tone generator (perfecttune.net)</span></li>
+          <li><a href="https://photoshrink.net" target="_blank" rel="noopener" class="underline font-bold">Photo Shrink</a> <span class="opacity-70">— resize, compress, crop &amp; convert images in your browser (photoshrink.net)</span></li>
+          <li><a href="https://qrmint.net" target="_blank" rel="noopener" class="underline font-bold">QR Mint</a> <span class="opacity-70">— generate QR codes for links, WiFi, contacts &amp; text (qrmint.net)</span></li>
+          <li><a href="https://reflexzap.com" target="_blank" rel="noopener" class="underline font-bold">Reflex Zap</a> <span class="opacity-70">— reaction time test: how fast are your reflexes? (reflexzap.com)</span></li>
+        </ul>
+        <p class="mt-6 opacity-60 text-sm">Prefer the long way round? Poke the console below — try <code>ls projects</code> or <code>cat projects/photoshrink.txt</code>.</p>
+      </main>
+
+      <!-- BOTTOM: the live eRabb.it terminal, docked like a dev console (desktop only) -->
+      <section class="hidden md:block relative border-t border-bright-green/40 overflow-hidden">
+        <div class="absolute inset-0 overflow-y-auto grid grid-rows-[auto_1fr] p-4">
+          <turbo-frame id="output"
+                       data-action="turbo:before-fetch-response->output#handle404
+                                    turbo:before-frame-render->output#setRenderToAppend
+                                    keydown.meta+k@document->output#clear
+                                    input:clearOut@document->output#clear
+                                    input:stdOut@document->output#stdOut"
+                       data-controller="output">
+            eRabb.it console — try <strong>ls</strong>, <strong>cat [FILE]</strong>, <strong>cd [DIRECTORY]</strong>, <strong>pwd</strong> or <strong>clear</strong>.
+          </turbo-frame>
+          <turbo-frame id="input"
+                       class="relative"
+                       data-controller="input"
+                       src="/bin/cd/projects/index.turbo_frame.html">
+          </turbo-frame>
+        </div>
+      </section>
+
+    </div>
+  </body>
+</html>
