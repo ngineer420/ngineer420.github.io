@@ -30,6 +30,8 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm install
+      - name: Check every project is listed in all three places
+        run: python3 check-projects.py
       - name: Build
         run: npm run build
       - name: Setup Pages
