@@ -31,8 +31,6 @@ SLUG_TO_DOMAIN = {
     "calculatoreuphoria": "calculatoreuphoria.com",
     "clocklab": "clocklab.net",
     "drawlots": "drawlots.net",
-    "hueshift": "hueshift.net",
-    "notepadly": "notepadly.app",
     "perfecttune": "perfecttune.net",
     "photoshrink": "photoshrink.net",
     "qrmint": "qrmint.net",
@@ -50,14 +48,22 @@ def sudo_cat_projects():
     return {p.name[: -len(".txt")] for p in d.iterdir() if p.name.endswith(".txt")}
 
 
-def ls_projects():
+def ls_order():
     f = ROOT / "public" / "bin" / "ls" / "projects" / "index.turbo_frame.html"
-    return set(re.findall(r"<li>([^<]+)\.txt</li>", f.read_text()))
+    return re.findall(r"<li>([^<]+)\.txt</li>", f.read_text())
+
+
+def ls_projects():
+    return set(ls_order())
+
+
+def page_order():
+    f = ROOT / "projects" / "index.html"
+    return re.findall(r'<li><a href="https://([^"/]+)"', f.read_text())
 
 
 def page_domains():
-    f = ROOT / "projects" / "index.html"
-    return set(re.findall(r'<li><a href="https://([^"/]+)"', f.read_text()))
+    return set(page_order())
 
 
 def domain_for(slug):
@@ -94,6 +100,13 @@ def main():
             + ", ".join(sorted(missing_page))
         )
 
+    # A rename keeps the old alphabetical slot unless somebody re-sorts the list.
+    # All three renamed sites drifted this way, and a set comparison cannot see it.
+    for name, order in (("`ls projects`", ls_order()), ("projects/index.html", page_order())):
+        if order != sorted(order):
+            first = next(a for a, b in zip(order, sorted(order)) if a != b)
+            problems.append("%s is not in alphabetical order, starting at %s" % (name, first))
+
     if problems:
         print("Project lists disagree:\n", file=sys.stderr)
         for p in problems:
@@ -105,7 +118,7 @@ def main():
         )
         return 1
 
-    print("%d projects, all three lists agree." % len(cat))
+    print("%d projects, all three lists agree and are in order." % len(cat))
     return 0
 
 
