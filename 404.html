@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐇</text></svg>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>eRabb.it</title>
+    <title>Not found &mdash; eRabb.it</title>
+    <meta name="robots" content="noindex" />
     <link rel="stylesheet" type="text/css" href="/src/index.css">
     <script type="module" src="/src/main.ts"></script>
   </head>
@@ -38,14 +39,14 @@ e::::::::e        RR:::::R     R:::::Ra::::a    a:::::a b:::::bbbbbb::::::bb::::
   ee:::::::::::::eR::::::R     R:::::R a::::::::::aa:::ab:::::::::::::::b  b:::::::::::::::b   .::::. i::::::i       tt:<a href="/projects" data-turbo="false" style="cursor:default">nozz:a:la</a>:tt
     eeeeeeeeeeeeeeRRRRRRRR     RRRRRRR  aaaaaaaaaa  aaaabbbbbbbbbbbbbbbb   bbbbbbbbbbbbbbbb    ...... iiiiiiii         ttttttttttt  
         </pre>
-        Welcome! Available commands: 
-          <strong>cat [FILE]</strong>,
-          <strong>cd [DIRECTORY]</strong>,
-          <strong>clear</strong>,
-          <strong>help</strong>,
-          <strong>ls [DIRECTORY]</strong>,
-          <strong>pwd</strong>,
-          <strong>source-control</strong>
+        <div>$ cd <span id="missing-path"></span></div>
+        <div><strong>Command/path not found</strong></div>
+        <div>Type <strong>help</strong> for the command list, or go back to <a class="underline" href="/" data-turbo="false">erabb.it</a>.</div>
+        <script>
+          // GitHub Pages serves this file at the missing URL, so the path is
+          // the one the visitor typed. textContent keeps it inert.
+          document.getElementById("missing-path").textContent = window.location.pathname
+        </script>
       </turbo-frame>
 
       <turbo-frame id="input" 

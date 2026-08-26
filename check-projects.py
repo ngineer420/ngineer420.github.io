@@ -28,6 +28,9 @@ ROOT = pathlib.Path(__file__).parent
 # domain's second-level label goes here.
 SLUG_TO_DOMAIN = {
     "erabbit": "erabb.it",
+    "goodbotbadbot": "goodbotbad.bot",
+    "losttouch": "losttou.ch",
+    "lovestruck": "lovestruck.us",
     "calculatoreuphoria": "calculatoreuphoria.com",
     "clocklab": "clocklab.net",
     "drawlots": "drawlots.net",
