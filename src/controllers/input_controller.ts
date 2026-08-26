@@ -11,6 +11,9 @@ export default class InputController extends Controller<HTMLElement> {
   // page - so they are the commands whose completions leave files out.
   static dirOnlyCmds = [ "cd", "ls" ]
   static sudoCmd = "sudo"
+  // The history lives in localStorage, so a reload keeps the last commands.
+  static historyKey = "erabbit:history"
+  static historyLimit = 50
   static targets = [ "cwd" ]
   static values = {
     history: Array,
@@ -32,6 +35,11 @@ export default class InputController extends Controller<HTMLElement> {
   // The command line as it stood after the last tab, so that a second tab on
   // unchanged input can print the candidates instead of doing nothing twice.
   private lastTabbedVal: string | null = null
+
+  connect() {
+    this.historyValue = this.readHistory()
+    this.historyIndexValue = 0
+  }
 
   clear(ev: Event & { target: HTMLElement }) {
     ev.preventDefault()
@@ -124,9 +132,11 @@ export default class InputController extends Controller<HTMLElement> {
   private appendHistory(val: string) {
     let historyVal = this.historyValue
     historyVal.unshift(val)
+    historyVal = historyVal.slice(0, InputController.historyLimit)
 
     this.historyIndexValue = 0
     this.historyValue = historyVal
+    this.writeHistory(historyVal)
   }
 
   private async candidates(before: string, dir: string, base: string) {
@@ -288,6 +298,32 @@ export default class InputController extends Controller<HTMLElement> {
 
   private pathFromCwd(val: string) {
     return val.startsWith("/") ? val : this.cwdTarget.dataset.cwd + val
+  }
+
+  // Storage can be missing, full or blocked (private mode, a strict browser
+  // policy), and none of that is a reason to break the command line.
+  private readHistory(): string[] {
+    try {
+      let stored = JSON.parse(window.localStorage.getItem(InputController.historyKey) || "[]")
+
+      if (!Array.isArray(stored)) return []
+
+      return stored
+        .filter((entry): entry is string => typeof entry == "string")
+        .slice(0, InputController.historyLimit)
+    }
+    catch {
+      return []
+    }
+  }
+
+  private writeHistory(historyVal: string[]) {
+    try {
+      window.localStorage.setItem(InputController.historyKey, JSON.stringify(historyVal))
+    }
+    catch {
+      // The session still has the in-memory history.
+    }
   }
 
   // The directory a half-typed path points at, with `.` and `..` folded away so
